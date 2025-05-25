@@ -33,9 +33,14 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-slate-800">Abhishek Kumar</div>
+          <a
+            href="/"
+            className="text-2xl font-bold text-slate-800 hover:text-blue-600 transition-colors duration-200"
+          >
+            Abhishek Kumar
+          </a>
 
-          {/* Desktop Navigation */}
+          { }
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => (
               <a
