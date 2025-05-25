@@ -6,7 +6,7 @@ export function About() {
     {
       icon: Code,
       title: "Backend Development",
-      description: "Expert in Node.js, Express.js, and modern JavaScript frameworks",
+      description: "Expert in Node.js, Express.js, Nest.js and modern JavaScript TypeScript frameworks",
     },
     {
       icon: Database,
@@ -31,7 +31,7 @@ export function About() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-slate-800 mb-4">About Me</h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Passionate Node.js developer with 4 years of experience building scalable backend systems, microservices,
+            Passionate Software developer with 4 years of experience building scalable backend systems, microservices,
             and high-performance applications. I specialize in creating robust APIs and optimizing database performance
             for enterprise-level applications.
           </p>

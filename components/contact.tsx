@@ -28,12 +28,12 @@ export function Contact() {
     {
       icon: Github,
       label: "GitHub",
-      href: "#",
+      href: "https://github.com/AAbhishek18",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "#",
+      href: "https://www.linkedin.com/in/abhishek-kumar-0542ba72/",
     },
   ]
 
@@ -104,10 +104,13 @@ export function Contact() {
                   <a
                     key={index}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors duration-200"
                   >
                     <link.icon className="h-5 w-5 text-slate-600" />
                   </a>
+
                 ))}
               </div>
             </CardContent>
@@ -116,7 +119,7 @@ export function Contact() {
 
         {/* Footer */}
         <div className="text-center mt-16 pt-8 border-t border-slate-200">
-          <p className="text-slate-600">© 2025 Abhishek Kumar. Built with Next.js and Tailwind CSS.</p>
+          <p className="text-slate-600">© 2025 Abhishek Kumar.</p>
         </div>
       </div>
     </section>

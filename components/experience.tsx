@@ -22,7 +22,7 @@ export function Experience() {
       company: "TravelOMedia",
       position: "Node.js Developer",
       duration: "Aug 2023 - Jun 2024",
-      location: "Remote",
+      location: "Hybrid",
       achievements: [
         "Worked as a BE developer on multiple projects, adding value by implementing business logic and APIs",
         "Developed backend of projects from the scratch single-handedly",

@@ -37,6 +37,23 @@ export function Projects() {
       features: ["Real-time Gaming", "Fantasy Sports", "Event Management", "Scalable Architecture"],
       githubUrl: "#",
     },
+    {
+      title: "ManagESG - Sustainability Management Platform",
+      description:
+        "A cloud-based ESG (Environmental, Social, Governance) platform designed to help organizations track sustainability KPIs, manage documentation, integrate third-party APIs, and generate AI-driven reports aligned with global standards like GRESB, ISSB, and CSRD.",
+      technologies: ["Node.js", "TypeScript", "Express.js", "MongoDB", "AWS S3", "GitLab"],
+      features: [
+        "ESG KPI Tracking",
+        "Document Upload & Management",
+        "AI-Powered Due Diligence",
+        "Third-Party API Integration",
+        "Role-Based Access Control",
+        "GDPR Compliance",
+        "Cloud Deployment (AWS/Azure)"
+      ],
+      githubUrl: "#"
+    }
+    
   ]
 
   return (
