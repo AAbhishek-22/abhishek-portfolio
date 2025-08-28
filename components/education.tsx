@@ -52,9 +52,7 @@ export function Education() {
                 <p className="text-slate-700">
                   <span className="font-semibold">Major:</span> Mechanical Engineering
                 </p>
-                <p className="text-slate-700">
-                  <span className="font-semibold">CGPA:</span> 6.75
-                </p>
+              
                 <Badge className="bg-green-100 text-green-700">Engineering Graduate</Badge>
               </div>
             </CardContent>

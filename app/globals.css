@@ -92,3 +92,64 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* NEW: Add these keyframes for zig-zag animation */
+@keyframes zigzag {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(10px, -10px);
+  }
+  50% {
+    transform: translate(0, 0);
+  }
+  75% {
+    transform: translate(-10px, 10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* 🔴 NEW: Add a class for the animation */
+.zigzag-animation {
+  animation: zigzag 3s ease-in-out infinite;
+}
+
+/* 🔴 NEW: Add these keyframes for random movement animation */
+@keyframes randomMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(100px, 50px);
+  }
+  40% {
+    transform: translate(-50px, 100px);
+  }
+  60% {
+    transform: translate(150px, -30px);
+  }
+  80% {
+    transform: translate(-100px, -50px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* 🔴 NEW: Add a class for the random movement animation */
+.random-move-animation {
+  animation: randomMove 8s ease-in-out infinite;
+  position: relative;
+  z-index: 10;
+}
+
+/* 🔴 NEW: Add a container to prevent the image from going off-screen */
+.profile-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}

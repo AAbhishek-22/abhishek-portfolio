@@ -10,6 +10,7 @@ const nextConfig = {
     unoptimized: true,
   },
   poweredByHeader: false,
+  allowedDevOrigins: ['192.168.244.145'],
 }
 
 export default nextConfig

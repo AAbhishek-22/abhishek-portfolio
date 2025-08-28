@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Mail, Phone } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   Tooltip,
   TooltipContent,
@@ -10,9 +10,54 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { toast } from "sonner"
+import { ResumeDialog } from "@/components/resume-dialog"
 
 export const Hero = () => {
-  const [isDownloading, setIsDownloading] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const imageRef = useRef<HTMLDivElement>(null)
+  const [isMoving, setIsMoving] = useState(true)
+  const [isHovered, setIsHovered] = useState(false)
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+
+    const moveImage = () => {
+      if (!imageRef.current || !isMoving || isHovered) return
+
+      // Get window dimensions
+      const windowWidth = window.innerWidth
+      const windowHeight = window.innerHeight
+      
+      // Calculate random position within window bounds
+      // Keeping some margin from edges
+      const margin = 100
+      const maxX = windowWidth - margin
+      const maxY = windowHeight - margin
+      
+      const randomX = Math.random() * (maxX - margin) - (maxX / 2)
+      const randomY = Math.random() * (maxY - margin) - (maxY / 2)
+
+      // Apply the new position with smooth transition
+      imageRef.current.style.transform = `translate(${randomX}px, ${randomY}px)`
+    }
+
+    // Move image every 2 seconds if moving is enabled
+    if (isMoving && !isHovered) {
+      interval = setInterval(moveImage, 2000)
+      // Initial position
+      moveImage()
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval)
+      }
+    }
+  }, [isMoving, isHovered])
+
+  const handleImageClick = () => {
+    setIsMoving(!isMoving)
+  }
 
   const copyToClipboard = async (text: string) => {
     try {
@@ -45,51 +90,45 @@ export const Hero = () => {
     }
   };
 
-  const downloadResume = async () => {
-    try {
-      setIsDownloading(true)
-      const response = await fetch('/resume.pdf')
-      
-      if (!response.ok) {
-        throw new Error('Failed to download resume')
-      }
-
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = 'Abhishek-Resume.pdf'
-      document.body.appendChild(link)
-      link.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(link)
-    } catch (error) {
-      console.error('Error downloading resume:', error)
-      alert('Failed to download resume. Please try again later.')
-    } finally {
-      setIsDownloading(false)
-    }
-  }
-
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen py-12">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="flex flex-col items-center justify-center min-h-screen py-12 relative">
+      <div 
+        ref={imageRef}
+        className="w-32 h-32 rounded-full overflow-hidden shadow-xl border-4 border-blue-500 hover:border-blue-600 transition-all duration-1000 absolute cursor-pointer"
+        style={{ zIndex: 1 }}
+        onClick={handleImageClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <img
+          src="/abhishek.jpeg"
+          alt="Abhishek Kumar"
+          className="w-full h-full object-cover"
+        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="absolute inset-0" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{isMoving ? 'Click to stop movement' : 'Click to start movement'}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+
+      <div className="max-w-4xl mx-auto text-center relative" style={{ zIndex: 2 }}>
         <div className="mb-8">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden shadow-xl">
-            <img
-              src="/abhishek.jpeg"
-              alt="Abhishek Kumar"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <div className="w-32 h-32 mx-auto mb-6"></div>
+          
           <h1 className="text-5xl md:text-7xl font-bold text-slate-800 mb-4">
             Abhishek Kumar
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-2">
-            Software Developer
+            Node.js | Golang Developer
           </p>
           <p className="text-lg text-slate-500 mb-8">
-            4 Years of Experience • Backend Specialist • Microservices Expert
+            4<sup>+</sup> Years of Experience • Backend Specialist • Microservices Expert
           </p>
         </div>
 
@@ -156,11 +195,16 @@ export const Hero = () => {
       
       <Button
         className="mt-6"
-        onClick={downloadResume}
-        disabled={isDownloading}
+        onClick={() => setIsDialogOpen(true)}
       >
-        {isDownloading ? 'Downloading...' : 'Download Resume'}
+        Get Resume
       </Button>
+
+      <ResumeDialog 
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)} onDownload={function (): void {
+          throw new Error("Function not implemented.")
+        } }      />
     </section>
   )
 }
