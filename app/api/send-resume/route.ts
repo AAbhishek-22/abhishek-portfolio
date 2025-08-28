@@ -14,6 +14,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // Check env variables
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      return NextResponse.json(
+        { error: 'Email configuration is missing.' },
+        { status: 500 }
+      );
+    }
+
     // Create a transporter with Gmail app password
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -35,6 +43,9 @@ export async function POST(request: Request) {
       );
     }
 
+    // Read file as buffer
+    const resumeBuffer = fs.readFileSync(resumePath);
+
     // Email options
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -44,7 +55,7 @@ export async function POST(request: Request) {
       attachments: [
         {
           filename: 'Abhishek_Kumar_Resume.pdf',
-          path: resumePath,
+          content: resumeBuffer,
         },
       ],
     };
@@ -59,8 +70,8 @@ export async function POST(request: Request) {
       { message: 'Resume sent successfully!' },
       { status: 200 }
     );
-  } catch (error) {
-    console.error('Error sending email:', error);
+  } catch (error: any) {
+    console.error('Error sending email:', error?.message || error);
     return NextResponse.json(
       { error: 'Failed to send resume. Please try again later.' },
       { status: 500 }

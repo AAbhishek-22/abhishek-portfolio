@@ -2,8 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2 } from "lucide-react"
-import { useState } from "react"
+import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2, CheckCircle } from "lucide-react"
+import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
@@ -19,6 +19,7 @@ type FormValues = z.infer<typeof formSchema>
 
 export function Contact() {
   const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   const { toast } = useToast()
   
   const form = useForm<FormValues>({
@@ -29,26 +30,55 @@ export function Contact() {
   })
 
   const onSubmit = async (data: FormValues) => {
+    console.log("Starting form submission...");
     setIsLoading(true)
+    setIsSuccess(false)
+    
     try {
-      const response = await fetch("/api/send-resume", {
+      console.log("Submitting form with email:", data.email);
+      const response = await fetch("/api/send-resume/route", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
+      });
+
+      const result = await response.json();
+      console.log("API response:", result);
+      console.log("Response status:", response.status);
+      console.log("Response ok:", response.ok);
 
       if (!response.ok) {
-        throw new Error("Failed to send resume")
+        console.error("Response not ok:", response.status, result);
+        throw new Error(result.error || "Failed to send resume");
       }
 
+      console.log("Success! Setting success state...");
+      console.log("Current isSuccess before setting:", isSuccess);
+      
+      // Show success toast
       toast({
         title: "Success!",
-        description: "Resume has been sent to your email.",
+        description: "Resume has been sent to your email successfully.",
       })
+      
+      // Set success state
+      setIsSuccess(true)
+      console.log("isSuccess set to true");
+      
+      // Reset form
       form.reset()
-    } catch (error) {
+      console.log("Form reset completed");
+      
+      // Don't auto-reset success state - let user control it
+      // setTimeout(() => {
+      //   setIsSuccess(false)
+      // }, 3000)
+      
+    } catch (error: any) {
+      console.error("Form submission error:", error);
+      console.error("Error details:", error.message);
       toast({
         title: "Error",
         description: "Failed to send resume. Please try again.",
@@ -56,8 +86,16 @@ export function Contact() {
       })
     } finally {
       setIsLoading(false)
+      console.log("Loading state set to false");
     }
   }
+
+  // Debug effect to monitor state changes
+  useEffect(() => {
+    console.log("State changed - isSuccess:", isSuccess, "isLoading:", isLoading);
+  }, [isSuccess, isLoading]);
+
+  console.log("Component render - isSuccess:", isSuccess, "isLoading:", isLoading);
 
   const contactInfo = [
     {
@@ -164,40 +202,55 @@ export function Contact() {
                 <CardTitle className="text-xl text-slate-800">Get My Resume</CardTitle>
               </CardHeader>
               <CardContent>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input placeholder="your.email@example.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                {isSuccess ? (
+                  <div className="text-center py-8">
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-green-700 mb-2">Resume Sent Successfully!</h3>
+                    <p className="text-green-600 mb-4">Your resume has been sent to your email address.</p>
                     <Button 
-                      type="submit" 
-                      className="w-full bg-blue-600 hover:bg-blue-700"
-                      disabled={isLoading}
+                      onClick={() => setIsSuccess(false)}
+                      variant="outline"
+                      className="bg-white hover:bg-green-50"
                     >
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="mr-2 h-4 w-4" />
-                          Send Resume to Email
-                        </>
-                      )}
+                      Send Another Resume
                     </Button>
-                  </form>
-                </Form>
+                  </div>
+                ) : (
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input placeholder="your.email@example.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="mr-2 h-4 w-4" />
+                            Send Resume to Email
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                )}
               </CardContent>
             </Card>
           </div>
