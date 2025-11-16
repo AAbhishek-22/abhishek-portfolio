@@ -5,37 +5,37 @@ export function Skills() {
   const skillCategories = [
     {
       category: "Programming Languages",
-      skills: ["JavaScript", "TypeScript", "Golang", "Core Java"],
+      skills: ["Javascript", "Typescript", "Golang"],
       color: "bg-blue-100 text-blue-700",
     },
     {
       category: "Backend Frameworks",
-      skills: ["Node.js", "Express.js", "NestJS", "Sails.js"],
+      skills: ["Nodejs", "Expressjs", "Nestjs", "Sailsjs", "Gin"],
       color: "bg-green-100 text-green-700",
     },
     {
       category: "Databases",
-      skills: ["MongoDB", "PostgreSQL", "DynamoDB", "Redis"],
+      skills: ["Mongodb", "Dynmodb", "PostgreSQL", "Redis"],
       color: "bg-purple-100 text-purple-700",
     },
     {
       category: "Cloud & DevOps",
-      skills: ["AWS S3", "AWS EC2", "AWS ECS", "Docker", "CI/CD", "Jenkins"],
+      skills: ["AWS S3", "AWS EC2", "AWS ECS", "AWS EKS", "CI/CD", "Jenkins", "Docker", "K8s"],
       color: "bg-orange-100 text-orange-700",
     },
     {
       category: "Message Queues & APIs",
-      skills: ["Kafka", "SQS", "REST APIs", "JWT", "OAuth", "Swagger"],
+      skills: ["Kafka", "SQS", "JWT", "OAuth", "MFA", "Captcha0", "Swagger"],
       color: "bg-pink-100 text-pink-700",
     },
     {
       category: "Tools & Platforms",
-      skills: ["Git/GitHub/GitLab", "Postman", "Jira", "Render", "Vercel"],
+      skills: ["Git/Github/Gitlab", "Postman", "Render", "Vercel", "Algorithms"],
       color: "bg-indigo-100 text-indigo-700",
     },
   ]
 
-  const softSkills = ["Leadership", "Hard work", "Adaptable", "Open-mindedness"]
+  const softSkills = ["Leadership", "Hard work", "Adaptable", "Collaborative", "Open-minded"]
 
   return (
     <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">

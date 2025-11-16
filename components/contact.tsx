@@ -36,7 +36,7 @@ export function Contact() {
     
     try {
       console.log("Submitting form with email:", data.email);
-      const response = await fetch("/api/send-resume/route", {
+      const response = await fetch("/api/send-resume", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,14 +44,35 @@ export function Contact() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-      console.log("API response:", result);
       console.log("Response status:", response.status);
       console.log("Response ok:", response.ok);
+      
+      // Try to parse response as JSON
+      let result;
+      try {
+        result = await response.json();
+        console.log("API response:", result);
+      } catch (parseError) {
+        console.error("Failed to parse response as JSON:", parseError);
+        result = {};
+      }
 
       if (!response.ok) {
         console.error("Response not ok:", response.status, result);
-        throw new Error(result.error || "Failed to send resume");
+        
+        // Handle rate limit specifically
+        if (response.status === 429) {
+          const errorMessage = result.error || "Rate limit exceeded. Please wait before requesting again.";
+          const errorDetails = result.details || `You can request another resume in ${result.retryAfter || 300} seconds.`;
+          console.log("Rate limit error message:", errorMessage);
+          throw new Error(`${errorMessage} ${errorDetails}`);
+        }
+        
+        // Handle other errors
+        const errorMessage = result.error || "Failed to send resume";
+        const errorDetails = result.details || "";
+        console.log("Other error message:", errorMessage);
+        throw new Error(errorDetails ? `${errorMessage}. ${errorDetails}` : errorMessage);
       }
 
       console.log("Success! Setting success state...");
@@ -71,17 +92,22 @@ export function Contact() {
       form.reset()
       console.log("Form reset completed");
       
-      // Don't auto-reset success state - let user control it
-      // setTimeout(() => {
-      //   setIsSuccess(false)
-      // }, 3000)
-      
     } catch (error: any) {
       console.error("Form submission error:", error);
       console.error("Error details:", error.message);
+      
+      // Show appropriate error message
+      let errorMessage = "Failed to send resume. Please try again.";
+      
+      if (error.message.includes("Rate limit exceeded")) {
+        errorMessage = error.message;
+      } else if (error.message.includes("Failed to send resume")) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to send resume. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {

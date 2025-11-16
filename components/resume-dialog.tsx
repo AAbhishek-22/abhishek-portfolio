@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
-import { CheckCircle, Mail, Download, X } from "lucide-react"
+import { CheckCircle, Mail, X } from "lucide-react"
 
 interface ResumeDialogProps {
   isOpen: boolean
   onClose: () => void
-  onDownload: () => void
+  onDownload?: () => void
 }
 
 export function ResumeDialog({ isOpen, onClose, onDownload }: ResumeDialogProps) {
@@ -37,25 +37,47 @@ export function ResumeDialog({ isOpen, onClose, onDownload }: ResumeDialogProps)
         body: JSON.stringify({ email }),
       })
 
+      let result
+      try {
+        result = await res.json()
+      } catch (parseError) {
+        result = {}
+      }
+
       if (res.ok) {
         setIsSuccess(true)
         toast.success("Resume successfully sent to your email!", {
           description: "Check your inbox for the PDF attachment",
           duration: 5000,
         })
-        onDownload()
         // Close popup after 3 seconds to show success message
         setTimeout(() => {
           handleDialogClose()
         }, 3000)
       } else {
-        toast.error("Failed to send resume. Please try again.", {
-          description: "Make sure your email address is correct",
-        })
+        // Handle rate limit errors
+        if (res.status === 429) {
+          const waitTime = result.retryAfter || 300
+          const minutes = Math.ceil(waitTime / 60)
+          toast.error("Too many requests", {
+            description: result.details || `Please wait ${minutes} minute(s) before requesting again.`,
+            duration: 6000,
+          })
+        } else {
+          // Handle other errors
+          const errorMessage = result.error || "Failed to send resume. Please try again."
+          const errorDetails = result.details || "Make sure your email address is correct and try again."
+          toast.error(errorMessage, {
+            description: errorDetails,
+            duration: 6000,
+          })
+        }
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Error submitting form:", error)
       toast.error("Something went wrong. Please try again.", {
-        description: "Network error occurred",
+        description: error?.message || "Network error occurred. Please check your connection.",
+        duration: 6000,
       })
     } finally {
       setIsSubmitting(false)
@@ -112,8 +134,8 @@ export function ResumeDialog({ isOpen, onClose, onDownload }: ResumeDialogProps)
             </p>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <div className="flex items-center space-x-2 text-blue-800">
-                <Download className="h-4 w-4" />
-                <span className="text-sm font-medium">Resume also downloaded to your device</span>
+                <Mail className="h-4 w-4" />
+                <span className="text-sm font-medium">Please check your inbox for the PDF attachment</span>
               </div>
             </div>
             <p className="text-sm text-gray-500">

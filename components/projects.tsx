@@ -8,48 +8,37 @@ export function Projects() {
     {
       title: "Product Management & E-commerce",
       description:
-        "Full-featured e-commerce platform with user management, product catalog, shopping cart, and order processing. Built with modern backend architecture similar to Flipkart and Amazon.",
-      technologies: ["JavaScript", "Node.js", "Express.js", "MongoDB", "JWT", "AWS S3"],
-      features: ["User Authentication", "Product Management", "Shopping Cart", "Order Processing"],
-      githubUrl: "#",
-    },
-    {
-      title: "CAN-Platform",
-      description:
-        "A dedicated social community platform designed for cancer patients and survivors to share experiences, provide mutual support, and connect with healthcare professionals.",
-      technologies: ["Node.js", "NestJS", "TypeScript", "MongoDB"],
-      features: ["Social Community", "Healthcare Integration", "Support System", "User Profiles"],
+        "The project has 4 features: User, Product, Order, and Cart. Users can create accounts, add products to cart, and place orders like Flipkart and Amazon.",
+      technologies: ["JavaScript", "Node.js", "Express.js", "MongoDB", "JWT", "middleware", "AWS S3"],
+      features: ["User Management", "Product Management", "Shopping Cart", "Order Processing"],
       githubUrl: "#",
     },
     {
       title: "GETYOLO - Student Credit Card",
       description:
-        "Fintech platform that provides credit card services specifically designed for college students, with tailored features and approval processes.",
-      technologies: ["Node.js", "NestJS", "TypeScript", "MongoDB"],
-      features: ["Credit Assessment", "Student Verification", "Financial Services", "Secure Transactions"],
+        "This is a fintech project that provides a credit card to college students.",
+      technologies: ["Go (Golang)", "Gin", "MongoDB", "Redis"],
+      features: ["Credit Card Services", "Student Verification", "Financial Services", "Secure Transactions"],
       githubUrl: "#",
     },
     {
-      title: "Fanclash Classic MMF/Switch Fantasy",
+      title: "Fanclash Classic MMF/Switch Fantasy - Esports & Fantasy Gaming",
       description:
-        "Esports gaming application based on real-life events across different sports segments. Features fantasy gaming, real-time updates, and competitive gameplay.",
-      technologies: ["Node.js", "MongoDB", "JavaScript", "TypeScript", "Sails.js", "Express.js", "Kafka", "AWS S3"],
+        "The project is an esports gaming application based on real-life events in different sports segments.",
+      technologies: ["NodeJS", "MongoDB", "JavaScript", "Typescript", "Sails", "ExpressJS", "JWT", "Kafka", "middleware", "AWS S3"],
       features: ["Real-time Gaming", "Fantasy Sports", "Event Management", "Scalable Architecture"],
       githubUrl: "#",
     },
     {
-      title: "ManagESG - Sustainability Management Platform",
+      title: "Tira Beauty (Reliance Retail) - E-Commerce & Beauty Platform",
       description:
-        "A cloud-based ESG (Environmental, Social, Governance) platform designed to help organizations track sustainability KPIs, manage documentation, integrate third-party APIs, and generate AI-driven reports aligned with global standards like GRESB, ISSB, and CSRD.",
-      technologies: ["Node.js", "TypeScript", "Express.js", "MongoDB", "AWS S3", "GitLab"],
+        "This is an omnichannel beauty e-commerce platform — Tira Beauty — designed to manage large-scale product catalogs, seamless order processing, and unified online-offline shopping experiences.",
+      technologies: ["JavaScript", "Node.js", "Express.js", "MongoDB", "Kafka", "Redis"],
       features: [
-        "ESG KPI Tracking",
-        "Document Upload & Management",
-        "AI-Powered Due Diligence",
-        "Third-Party API Integration",
-        "Role-Based Access Control",
-        "GDPR Compliance",
-        "Cloud Deployment (AWS/Azure)"
+        "Omnichannel E-commerce",
+        "Large-scale Product Catalog",
+        "Order Processing",
+        "Online-Offline Integration"
       ],
       githubUrl: "#"
     }

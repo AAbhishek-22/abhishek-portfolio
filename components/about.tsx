@@ -6,7 +6,7 @@ export function About() {
     {
       icon: Code,
       title: "Backend Development",
-      description: "Expert in Node.js, Express.js, Nest.js and modern JavaScript TypeScript frameworks, Golang Gin, Echo framework",
+      description: "Expert in Node.js, Express.js, Nest.js, Sails.js and modern JavaScript/TypeScript frameworks, Golang with Gin framework",
     },
     {
       icon: Database,
@@ -16,12 +16,12 @@ export function About() {
     {
       icon: Cloud,
       title: "Cloud & DevOps",
-      description: "AWS services, CI/CD pipelines, and containerization with Docker",
+      description: "AWS services (S3, EC2, ECS, EKS), CI/CD pipelines, Docker, Kubernetes, and cloud deployment",
     },
     {
       icon: Zap,
-      title: "Performance",
-      description: "Microservices architecture and high-performance API development",
+      title: "Event-Driven Architecture",
+      description: "Kafka-based microservices, real-time data synchronization, and scalable event-driven systems",
     },
   ]
 
@@ -31,9 +31,10 @@ export function About() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-slate-800 mb-4">About Me</h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Passionate Software developer with 4<sup>+</sup> years of experience building scalable backend systems, microservices,
-            and high-performance applications. I specialize in creating robust APIs and optimizing database performance
-            for enterprise-level applications.
+            Passionate Backend Developer with 4<sup>+</sup> years of experience building scalable, event-driven microservices architecture,
+            and high-performance applications. I specialize in Node.js, Go, Kafka, microservices, and AWS cloud infrastructure.
+            Expert in creating robust APIs, optimizing database performance, and implementing real-time data synchronization
+            for enterprise-level e-commerce and fintech applications.
           </p>
         </div>
 

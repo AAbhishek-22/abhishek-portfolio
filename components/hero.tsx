@@ -122,13 +122,16 @@ export const Hero = () => {
           <div className="w-32 h-32 mx-auto mb-6"></div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-slate-800 mb-4">
-            Abhishek Kumar
+            ABHISHEK KUMAR
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-2">
-            Node.js | Golang Developer
+            Backend Developer
           </p>
-          <p className="text-lg text-slate-500 mb-8">
-            4<sup>+</sup> Years of Experience • Backend Specialist • Microservices Expert
+          <p className="text-lg text-slate-500 mb-4">
+            Node.js | Go | Kafka | Microservices | AWS
+          </p>
+          <p className="text-base text-slate-500 mb-8">
+            4<sup>+</sup> Years of Experience
           </p>
         </div>
 
@@ -202,9 +205,8 @@ export const Hero = () => {
 
       <ResumeDialog 
         isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)} onDownload={function (): void {
-          throw new Error("Function not implemented.")
-        } }      />
+        onClose={() => setIsDialogOpen(false)}
+      />
     </section>
   )
 }
